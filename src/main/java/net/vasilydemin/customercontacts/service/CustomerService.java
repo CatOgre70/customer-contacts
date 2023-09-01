@@ -65,6 +65,18 @@ public class CustomerService {
         }
     }
 
+    public CustomerDto updateCustomer(CustomerDto customerDto) {
+        Optional<Customer> customerFound = customerRepository.findCustomerById(customerDto.getId());
+        if(customerFound.isEmpty()) {
+            String msg = UserMessages.CUSTOMER_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
+                    .replace("%id%", customerDto.getId().toString());
+            logger.error(msg);
+            throw new CustomerWithSuchIdNotFoundException(msg);
+        } else {
+            return customerMapper.entityToDto(customerRepository.save(customerMapper.dtoToEntity(customerDto)));
+        }
+    }
+
     public CustomerDto deleteCustomerById(Long id){
         Optional<Customer> customerFound = customerRepository.findCustomerById(id);
         if(customerFound.isEmpty()) {

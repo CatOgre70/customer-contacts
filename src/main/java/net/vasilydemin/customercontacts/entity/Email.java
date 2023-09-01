@@ -16,10 +16,10 @@ public class Email {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Long customerId;
+    private Long customerId;
 
-    String email;
+    private String email;
 
 }

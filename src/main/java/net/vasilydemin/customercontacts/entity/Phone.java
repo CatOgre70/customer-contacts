@@ -16,10 +16,10 @@ public class Phone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Long customerId;
+    private Long customerId;
 
-    String phone;
+    private String phone;
 
 }

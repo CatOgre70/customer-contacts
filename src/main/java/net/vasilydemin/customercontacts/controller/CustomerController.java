@@ -3,6 +3,7 @@ package net.vasilydemin.customercontacts.controller;
 import jakarta.validation.constraints.NotNull;
 import net.vasilydemin.customercontacts.dto.CustomerDto;
 import net.vasilydemin.customercontacts.service.CustomerService;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @PostMapping
     public CustomerDto createCustomer(@NotNull @RequestParam(value = "name") String name){
         return customerService.createCustomer(name);
     }

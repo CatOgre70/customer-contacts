@@ -12,6 +12,7 @@ import net.vasilydemin.customercontacts.dto.EmailDto;
 import net.vasilydemin.customercontacts.dto.PhoneDto;
 import net.vasilydemin.customercontacts.service.CustomerService;
 import net.vasilydemin.customercontacts.service.EmailService;
+import net.vasilydemin.customercontacts.service.PhoneService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,12 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final EmailService emailService;
+    private final PhoneService phoneService;
 
-    public CustomerController(CustomerService customerService, EmailService emailService) {
+    public CustomerController(CustomerService customerService, EmailService emailService, PhoneService phoneService) {
         this.customerService = customerService;
         this.emailService = emailService;
+        this.phoneService = phoneService;
     }
 
     @Operation(
@@ -177,7 +180,7 @@ public class CustomerController {
     )
     @GetMapping("/{id}/allphones")
     public List<PhoneDto> readAllPhonesByCustomerId(@PathVariable Long id) {
-        return null;
+        return phoneService.findAllPhonesByCustomerId(id);
     }
 
     @Operation(
@@ -207,7 +210,7 @@ public class CustomerController {
     )
     @GetMapping("/{id}/allcontacts")
     public CustomerWithContactsDto readAllContactsByCustomerId(@PathVariable Long id) {
-        return null;
+        return customerService.readAllContactsByCustomerId(id);
     }
 
     @Operation(
@@ -238,7 +241,7 @@ public class CustomerController {
     @GetMapping("/{id}/allcontactsbytype")
     public List<String> readAllContactsByCustomerIdAndByType(@NotNull @PathVariable Long id,
                                                              @NotNull @RequestParam(name = "type") String type) {
-        return null;
+        return customerService.readAllContactsByCustomerIdAndByType(id, type);
     }
 
     @Operation(

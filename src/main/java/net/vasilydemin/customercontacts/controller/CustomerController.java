@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import net.vasilydemin.customercontacts.dto.CustomerDto;
 import net.vasilydemin.customercontacts.dto.CustomerWithContactsDto;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
+@Tag(name = "Customers", description = "Customers API")
 public class CustomerController {
 
     private final CustomerService customerService;

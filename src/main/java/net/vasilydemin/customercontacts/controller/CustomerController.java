@@ -14,6 +14,7 @@ import net.vasilydemin.customercontacts.dto.PhoneDto;
 import net.vasilydemin.customercontacts.service.CustomerService;
 import net.vasilydemin.customercontacts.service.EmailService;
 import net.vasilydemin.customercontacts.service.PhoneService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,13 @@ import java.util.List;
 @RequestMapping("/customer")
 @Tag(name = "Customers", description = "Customers API")
 public class CustomerController {
+
+    @Value("${application.default.page}")
+    private int defaultPage;
+
+    @Value("${application.default.itemsperpage}")
+    private int defaultItemsPerPage;
+
 
     private final CustomerService customerService;
     private final EmailService emailService;
@@ -117,11 +125,19 @@ public class CustomerController {
             tags = "Customers"
     )
     @GetMapping
-    public List<CustomerDto> readCustomerByName(@RequestParam(name = "name", required = false) String name) {
+    public List<CustomerDto> readCustomerByName(@RequestParam(name = "name", required = false) String name,
+                                                @RequestParam(name = "page", required = false) Integer page,
+                                                @RequestParam(name = "items", required = false) Integer items) {
         if(!(name == null || name.isEmpty() || name.isBlank())) {
             return Collections.singletonList(customerService.readCustomerByName(name));
         } else {
-            return customerService.readAllCustomers();
+            if(page == null || page < 0) {
+                page = defaultPage;
+            }
+            if(items == null || items < 1) {
+                items = defaultItemsPerPage;
+            }
+            return customerService.readAllCustomers(page, items);
         }
     }
 

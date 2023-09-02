@@ -10,7 +10,7 @@
     </parent>
     <groupId>net.vasilydemin</groupId>
     <artifactId>customer-contacts</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2</version>
     <name>customer-contacts</name>
     <description>customer-contacts</description>
     <properties>

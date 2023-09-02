@@ -3,8 +3,11 @@
 Java back-end to process customer contacts with emails and phones. Test task from Corporate Communications Inc. 
 (Ufa, Russia)
 
-To start application you need to have Java 17 Runtime virtual machine installed on your system, download
-customer-contacts-0.2.jar in current(root) folder, and execute following command:
+To start application you need to have Java 17 Runtime virtual machine installed on your system, download 
+
+    customer-contacts-0.2.jar [link](https://github.com/CatOgre70/customer-contacts/blob/5550710efd6b2aea1f48880b7c40c20afb7ae46a/customer-contacts-0.2.jar)
+
+in current(root) folder, and execute following command:
 
     java -jar customer-contacts-0.2.jar
 

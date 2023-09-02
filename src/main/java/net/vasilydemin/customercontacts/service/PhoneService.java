@@ -4,10 +4,7 @@ import net.vasilydemin.customercontacts.constant.UserMessages;
 import net.vasilydemin.customercontacts.dto.PhoneDto;
 import net.vasilydemin.customercontacts.entity.Customer;
 import net.vasilydemin.customercontacts.entity.Phone;
-import net.vasilydemin.customercontacts.exception.CustomerMustNotBeNullException;
-import net.vasilydemin.customercontacts.exception.CustomerWithSuchIdNotFoundException;
-import net.vasilydemin.customercontacts.exception.EmailIsInTheDatabaseAlreadyException;
-import net.vasilydemin.customercontacts.exception.EmailWithSuchIdNotFoundException;
+import net.vasilydemin.customercontacts.exception.*;
 import net.vasilydemin.customercontacts.mapper.PhoneMapper;
 import net.vasilydemin.customercontacts.repository.CustomerRepository;
 import net.vasilydemin.customercontacts.repository.PhoneRepository;
@@ -51,7 +48,7 @@ public class PhoneService {
             String msg = UserMessages.PHONE_NUMBER_IS_IN_THE_DATABASE_ALREADY1.getUserMessage()
                     .replace("%phone%", phoneDto.getPhone());
             logger.error(msg);
-            throw new EmailIsInTheDatabaseAlreadyException(msg);
+            throw new PhoneIsInTheDatabaseAlreadyException(msg);
         } else {
             return phoneMapper.entityToDto(phoneRepository.save(phoneMapper.dtoToEntity(phoneDto)));
         }
@@ -65,7 +62,7 @@ public class PhoneService {
             String msg = UserMessages.PHONE_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
                     .replace("%id%", id.toString());
             logger.error(msg);
-            throw new EmailWithSuchIdNotFoundException(msg);
+            throw new PhoneWithSuchIdNotFoundException(msg);
         }
     }
 
@@ -88,7 +85,7 @@ public class PhoneService {
             String msg = UserMessages.PHONE_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
                     .replace("%id%", phoneDto.getId().toString());
             logger.error(msg);
-            throw new EmailWithSuchIdNotFoundException(msg);
+            throw new PhoneWithSuchIdNotFoundException(msg);
         }
         Optional<Customer> customerFound = customerRepository.findCustomerById(phoneDto.getCustomerId());
         if(customerFound.isEmpty()) {
@@ -106,7 +103,7 @@ public class PhoneService {
             String msg = UserMessages.PHONE_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
                     .replace("%id%", phoneDto.getId().toString());
             logger.error(msg);
-            throw new EmailWithSuchIdNotFoundException(msg);
+            throw new PhoneWithSuchIdNotFoundException(msg);
         }
         phoneRepository.delete(phoneFound.get());
         return phoneMapper.entityToDto(phoneFound.get());

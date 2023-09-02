@@ -16,6 +16,9 @@ import net.vasilydemin.customercontacts.repository.EmailRepository;
 import net.vasilydemin.customercontacts.repository.PhoneRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +33,7 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
     private final EmailRepository emailRepository;
     private final PhoneRepository phoneRepository;
-    public CustomerService(CustomerRepository customerRepository,
-                           CustomerMapper customerMapper,
+    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,
                            EmailRepository emailRepository,
                            PhoneRepository phoneRepository) {
         this.customerRepository = customerRepository;
@@ -56,6 +58,12 @@ public class CustomerService {
         }
     }
 
+    /**
+     * Read customer with selected id from the database
+     * @param id Customer id
+     * @return CustomerDto object. If customer with such name doesn't exist in the database then throw
+     * CustomerWithSuchIdNotFoundException
+     */
     public CustomerDto readCustomerById(Long id){
         Optional<Customer> customerFound = customerRepository.findCustomerById(id);
         if(customerFound.isEmpty()) {
@@ -68,6 +76,12 @@ public class CustomerService {
         }
     }
 
+    /**
+     * Read customer with selected name from the database
+     * @param name customer name
+     * @return CustomerDto object. If customer with such name doesn't exist in the database then throw
+     * CustomerWithSuchNameNotFoundException
+     */
     public CustomerDto readCustomerByName(String name) {
         Optional<Customer> customerFound = customerRepository.findCustomerByNameIgnoreCase(name);
         if(customerFound.isPresent()) {
@@ -79,8 +93,14 @@ public class CustomerService {
         }
     }
 
-    public List<CustomerDto> readAllCustomers() {
-        return customerRepository.findAll().stream()
+    /**
+     * Read all customers from the database. This is a bad style if written without pagination
+     * @return List (array) of CustomerDto objects, unsorted with pagination (default or obtained from the http request)
+     */
+    public List<CustomerDto> readAllCustomers(int pageNumber, int itemsPerPage) {
+        Sort sorting = Sort.unsorted();
+        Pageable pageRequest = PageRequest.of(pageNumber, itemsPerPage, sorting);
+        return customerRepository.findAll(pageRequest).stream()
                 .map(customerMapper::entityToDto)
                 .toList();
     }

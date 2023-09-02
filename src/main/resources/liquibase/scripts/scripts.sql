@@ -8,12 +8,12 @@ CREATE TABLE customers (
 
 CREATE TABLE emails (
     id bigserial primary key,
-    customer_id bigint references customers(id),
+    customer_id bigint references customers(id) on delete cascade,
     email varchar(255)
 );
 
 CREATE TABLE phones (
     id bigserial primary key,
-    customer_id bigint references customers(id),
+    customer_id bigint references customers(id) on delete cascade,
     phone varchar(255)
 );

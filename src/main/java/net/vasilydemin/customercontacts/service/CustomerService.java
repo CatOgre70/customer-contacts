@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,10 +60,16 @@ public class CustomerService {
         if(customerFound.isPresent()) {
             return customerMapper.entityToDto(customerFound.get());
         } else {
-            String msg = UserMessages.CUSTOMER_WITH_SUCH_ID_NOT_FOUND.getUserMessage().replace("%name%", name);
+            String msg = UserMessages.CUSTOMER_WITH_SUCH_NAME_NOT_FOUND.getUserMessage().replace("%name%", name);
             logger.error(msg);
             throw new CustomerWithSuchNameNotFoundException(msg);
         }
+    }
+
+    public List<CustomerDto> readAllCustomers() {
+        return customerRepository.findAll().stream()
+                .map(customerMapper::entityToDto)
+                .toList();
     }
 
     public CustomerDto updateCustomer(CustomerDto customerDto) {
@@ -77,11 +84,11 @@ public class CustomerService {
         }
     }
 
-    public CustomerDto deleteCustomerById(Long id){
-        Optional<Customer> customerFound = customerRepository.findCustomerById(id);
+    public CustomerDto deleteCustomer(CustomerDto customerDto){
+        Optional<Customer> customerFound = customerRepository.findCustomerById(customerDto.getId());
         if(customerFound.isEmpty()) {
             String msg = UserMessages.CUSTOMER_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
-                    .replace("%id%", id.toString());
+                    .replace("%id%", customerDto.getId().toString());
             logger.error(msg);
             throw new CustomerWithSuchIdNotFoundException(msg);
         } else {
@@ -89,5 +96,4 @@ public class CustomerService {
             return customerMapper.entityToDto(customerFound.get());
         }
     }
-
 }

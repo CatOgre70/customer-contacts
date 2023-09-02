@@ -11,14 +11,25 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value
-            = { ContactTypeIsWrongException.class, CustomerMustNotBeNullException.class,
-                CustomerWithSuchIdNotFoundException.class, CustomerWithSuchNameNotFoundException.class,
-                EmailIsInTheDatabaseAlreadyException.class, EmailWithSuchIdNotFoundException.class,
-            PhoneIsInTheDatabaseAlreadyException.class, PhoneWithSuchIdNotFoundException.class})
+    @ExceptionHandler(value =
+            {   ContactTypeIsWrongException.class,
+                CustomerMustNotBeNullException.class,
+                CustomerWithSuchIdNotFoundException.class,
+                CustomerWithSuchNameNotFoundException.class,
+                EmailIsInTheDatabaseAlreadyException.class,
+                EmailWithSuchIdNotFoundException.class,
+                PhoneIsInTheDatabaseAlreadyException.class,
+                PhoneWithSuchIdNotFoundException.class
+            })
     protected ResponseEntity<Object> handleConflict(
             RuntimeException ex, WebRequest request) {
-        String bodyOfResponse = "{\"reason\":\"" + ex.getMessage() +"\", \"stackDepth\":" + ex.getStackTrace().length + "}";
+
+        // Well, this is demo of exception handler. Should be extended with StackTrace
+        // .toString printing and converting it to Json
+        // Source: https://www.baeldung.com/exception-handling-for-rest-with-spring
+        // May the Holy Baeldung be glorified forever and ever, amen! :)
+        String bodyOfResponse = "{\"reason\":\"" + ex.getMessage() +"\", \"stackDepth\":"
+                + ex.getStackTrace().length + "}";
         HttpStatus httpStatus;
         if(ex.getClass().equals(ContactTypeIsWrongException.class)
                 || ex.getClass().equals(CustomerMustNotBeNullException.class)

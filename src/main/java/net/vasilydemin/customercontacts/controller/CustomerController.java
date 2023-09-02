@@ -134,7 +134,7 @@ public class CustomerController {
                             description = "OK",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerDto.class)
+                                    schema = @Schema(implementation = EmailDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -164,7 +164,7 @@ public class CustomerController {
                             description = "OK",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerDto.class)
+                                    schema = @Schema(implementation = PhoneDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -194,7 +194,7 @@ public class CustomerController {
                             description = "OK",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerDto.class)
+                                    schema = @Schema(implementation = CustomerWithContactsDto.class)
                             )
                     ),
                     @ApiResponse(

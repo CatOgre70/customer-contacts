@@ -7,9 +7,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.constraints.NotNull;
 import net.vasilydemin.customercontacts.dto.CustomerDto;
+import net.vasilydemin.customercontacts.dto.EmailDto;
+import net.vasilydemin.customercontacts.dto.PhoneDto;
 import net.vasilydemin.customercontacts.service.CustomerService;
+import net.vasilydemin.customercontacts.service.EmailService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -18,9 +22,11 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final EmailService emailService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, EmailService emailService) {
         this.customerService = customerService;
+        this.emailService = emailService;
     }
 
     @Operation(
@@ -111,6 +117,66 @@ public class CustomerController {
         } else {
             return customerService.readAllCustomers();
         }
+    }
+
+    @Operation(
+            summary = "Read all emails owned by customer from the database by customer id",
+            operationId = "readAllCustomerEmails",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OK",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = CustomerDto.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad Request",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+            },
+            tags = "Customers"
+    )
+    @GetMapping("/{id}/allemails")
+    public List<EmailDto> readAllEmailsByCustomerId(@PathVariable Long id) {
+        return emailService.findAllEmailsByCustomerId(id);
+    }
+
+    @Operation(
+            summary = "Read all phones owned by customer from the database by customer id",
+            operationId = "readAllCustomerPhones",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OK",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = CustomerDto.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad Request",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+            },
+            tags = "Customers"
+    )
+    @GetMapping("/{id}/allphones")
+    public List<PhoneDto> readAllPhonesByCustomerId(@PathVariable Long id) {
+        return null;
     }
 
     @Operation(

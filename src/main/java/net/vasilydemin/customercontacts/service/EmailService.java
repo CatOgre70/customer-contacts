@@ -26,7 +26,7 @@ public class EmailService {
     private final EmailMapper emailMapper;
     private final CustomerRepository customerRepository;
 
-    public EmailService(EmailRepository emailRepository, EmailMapper emailMapper, CustomerService customerService, CustomerRepository customerRepository) {
+    public EmailService(EmailRepository emailRepository, EmailMapper emailMapper, CustomerRepository customerRepository) {
         this.emailRepository = emailRepository;
         this.emailMapper = emailMapper;
         this.customerRepository = customerRepository;

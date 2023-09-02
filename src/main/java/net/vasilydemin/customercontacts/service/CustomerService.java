@@ -11,7 +11,6 @@ import net.vasilydemin.customercontacts.exception.ContactTypeIsWrongException;
 import net.vasilydemin.customercontacts.exception.CustomerWithSuchIdNotFoundException;
 import net.vasilydemin.customercontacts.exception.CustomerWithSuchNameNotFoundException;
 import net.vasilydemin.customercontacts.mapper.CustomerMapper;
-import net.vasilydemin.customercontacts.mapper.EmailMapper;
 import net.vasilydemin.customercontacts.repository.CustomerRepository;
 import net.vasilydemin.customercontacts.repository.EmailRepository;
 import net.vasilydemin.customercontacts.repository.PhoneRepository;

@@ -211,6 +211,37 @@ public class CustomerController {
     }
 
     @Operation(
+            summary = "Read all customer contact information from the database by customer id an by type (email or phone)",
+            operationId = "readAllCustomerContactsByType",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OK",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = String.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad Request",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+            },
+            tags = "Customers"
+    )
+    @GetMapping("/{id}/allcontactsbytype")
+    public List<String> readAllContactsByCustomerIdAndByType(@NotNull @PathVariable Long id,
+                                                             @NotNull @RequestParam(name = "type") String type) {
+        return null;
+    }
+
+    @Operation(
             summary = "Update customer name in the database",
             operationId = "updateCustomer",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(

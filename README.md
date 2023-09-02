@@ -27,6 +27,7 @@ Detailed end points documentation is in Open API file [customer-contacts-v0.2.ya
 # Working application
 
 You can view API end points and try to test working application here:   
+http://46.188.28.196:8080/swagger-ui/index.html#/
 
 # Authors
 

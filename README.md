@@ -14,7 +14,7 @@ spring.datasource.username=YOUR_DATABASE_ADMIN_USER_NAME
 spring.datasource.password=YOUR_DATABASE_PASSWORD  
 spring.datasource.url=YOUR_DATABASE_URL (like jdbc:postgresql://DB_SERVER_IP_ADDRESS:5432/DATABASE_NAME)
 
-# API end-points
+# API end-points and Open API (Swagger) Documentation
 
 Swagger-UI is available by address <http://YOU_APPLICATION_SERVER_IP_ADDRESS:8080/swagger-ui/index.html#/>
 
@@ -23,6 +23,10 @@ Swagger-UI is available by address <http://YOU_APPLICATION_SERVER_IP_ADDRESS:808
     /emails - CRUD API end-points to work with emails
 
 Detailed end points documentation is in Open API file [customer-contacts-v0.2.yaml](https://github.com/CatOgre70/customer-contacts/blob/master/customer-contacts-v0.2.yaml) 
+
+# Working application
+
+You can view API end points and try to test working application here:   
 
 # Authors
 

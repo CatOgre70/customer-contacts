@@ -22,6 +22,8 @@ Swagger-UI is available by address <http://YOU_APPLICATION_SERVER_IP_ADDRESS:808
     /phones - CRUD API end-points to work with phones
     /emails - CRUD API end-points to work with emails
 
+Detailed end points documentation is in [customer-contacts-v0.2-resolved.yaml](https://github.com/CatOgre70/customer-contacts/blob/master/customer-contacts-v0.2-resolved.yaml) file. 
+
 # Authors
 
 [Vasily Demin](https://github.com/CatOgre70)

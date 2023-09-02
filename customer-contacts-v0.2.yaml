@@ -224,6 +224,22 @@ paths:
         explode: true
         schema:
           type: string
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+      - name: items
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
       responses:
         "200":
           description: OK

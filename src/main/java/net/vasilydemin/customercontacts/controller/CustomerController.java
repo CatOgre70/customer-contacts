@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.constraints.NotNull;
 import net.vasilydemin.customercontacts.dto.CustomerDto;
+import net.vasilydemin.customercontacts.dto.CustomerWithContactsDto;
 import net.vasilydemin.customercontacts.dto.EmailDto;
 import net.vasilydemin.customercontacts.dto.PhoneDto;
 import net.vasilydemin.customercontacts.service.CustomerService;
@@ -176,6 +177,36 @@ public class CustomerController {
     )
     @GetMapping("/{id}/allphones")
     public List<PhoneDto> readAllPhonesByCustomerId(@PathVariable Long id) {
+        return null;
+    }
+
+    @Operation(
+            summary = "Read all customer contact information from the database by customer id",
+            operationId = "readAllCustomerContacts",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OK",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = CustomerDto.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad Request",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found",
+                            content = @Content(mediaType = MediaType.TEXT_HTML_VALUE)
+                    ),
+            },
+            tags = "Customers"
+    )
+    @GetMapping("/{id}/allcontacts")
+    public CustomerWithContactsDto readAllContactsByCustomerId(@PathVariable Long id) {
         return null;
     }
 

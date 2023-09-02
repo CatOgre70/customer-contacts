@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -81,6 +80,36 @@ public class EmailService {
         return emailRepository.findAllByCustomerId(customerId).stream()
                 .map(emailMapper::entityToDto).toList();
 
+    }
+
+    public EmailDto updateEmail(EmailDto emailDto) {
+        Optional<Email> emailFound = emailRepository.findById(emailDto.getId());
+        if(emailFound.isEmpty()) {
+            String msg = UserMessages.EMAIL_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
+                    .replace("%id%", emailDto.getId().toString());
+            logger.error(msg);
+            throw new EmailWithSuchIdNotFoundException(msg);
+        }
+        Optional<Customer> customerFound = customerRepository.findCustomerById(emailDto.getCustomerId());
+        if(customerFound.isEmpty()) {
+            String msg = UserMessages.CUSTOMER_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
+                    .replace("%id%", emailDto.getCustomerId().toString());
+            logger.error(msg);
+            throw new CustomerWithSuchIdNotFoundException(msg);
+        }
+        return emailMapper.entityToDto(emailRepository.save(emailMapper.dtoToEntity(emailDto)));
+    }
+
+    public EmailDto deleteEmail(EmailDto emailDto){
+        Optional<Email> emailFound = emailRepository.findById(emailDto.getId());
+        if(emailFound.isEmpty()) {
+            String msg = UserMessages.EMAIL_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
+                    .replace("%id%", emailDto.getId().toString());
+            logger.error(msg);
+            throw new EmailWithSuchIdNotFoundException(msg);
+        }
+        emailRepository.delete(emailFound.get());
+        return emailMapper.entityToDto(emailFound.get());
     }
 
 }

@@ -1,0 +1,594 @@
+---
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0.2
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+tags:
+- name: Customers
+  description: Customers API
+paths:
+  /phones:
+    put:
+      tags:
+      - Phones
+      summary: Updating phone in the database with data from PhoneDto
+      operationId: updatePhone
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhoneDto'
+            examples:
+              JSON object PhoneDto:
+                description: JSON object PhoneDto
+                value:
+                  id: 1
+                  customerId: 2
+                  phone: +79023456789
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+    post:
+      tags:
+      - Phones
+      summary: Adding new phone in the database
+      operationId: addNewPhone
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhoneDto'
+            examples:
+              JSON object PhoneDto:
+                description: JSON object PhoneDto
+                value:
+                  id: 0
+                  customerId: 2
+                  phone: +79012345678
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+    delete:
+      tags:
+      - Phones
+      summary: Deleting phone from the database
+      operationId: deletePhone
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhoneDto'
+            examples:
+              JSON object PhoneDto:
+                description: JSON object PhoneDto
+                value:
+                  id: 1
+                  customerId: 2
+                  phone: +79023456789
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /emails:
+    put:
+      tags:
+      - Emails
+      summary: Updating email in the database with data from EmailDto
+      operationId: updateEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailDto'
+            examples:
+              JSON object EmailDto:
+                description: JSON object EmailDto
+                value:
+                  id: 1
+                  customerId: 2
+                  email: ivan.ivanov@mail.org
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+    post:
+      tags:
+      - Emails
+      summary: Adding new email in the database
+      operationId: addNewEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailDto'
+            examples:
+              JSON object EmailDto:
+                description: JSON object EmailDto
+                value:
+                  id: 0
+                  customerId: 2
+                  email: ivan.ivanov@mail.org
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+    delete:
+      tags:
+      - Emails
+      summary: Deleting email from the database
+      operationId: deleteEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailDto'
+            examples:
+              JSON object EmailDto:
+                description: JSON object EmailDto
+                value:
+                  id: 1
+                  customerId: 2
+                  email: ivan.ivanov@mail.org
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /customer:
+    get:
+      tags:
+      - Customers
+      summary: "Read customer from the database by name (strings must be equal, case insensitive) or read all customers if name = null or blank"
+      operationId: readCustomerByName
+      parameters:
+      - name: name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+    put:
+      tags:
+      - Customers
+      summary: Update customer name in the database
+      operationId: updateCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDto'
+            examples:
+              JSON object CustomerDto:
+                description: JSON object CustomerDto
+                value:
+                  id: 1
+                  name: Ivan Ivanov
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+    post:
+      tags:
+      - Customers
+      summary: Adding new customer in the database
+      operationId: addNewCustomer
+      parameters:
+      - name: name
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+    delete:
+      tags:
+      - Customers
+      summary: Delete customer from the database
+      operationId: deleteCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDto'
+            examples:
+              JSON object CustomerDto:
+                description: JSON object CustomerDto
+                value:
+                  id: 1
+                  name: Ivan Ivanov
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /phones/{id}:
+    get:
+      tags:
+      - Phones
+      summary: Read phone from the database by his id
+      operationId: readPhoneById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /emails/{id}:
+    get:
+      tags:
+      - Emails
+      summary: Read email from the database by his id
+      operationId: readEmailById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /customer/{id}:
+    get:
+      tags:
+      - Customers
+      summary: Read customer from the database by id
+      operationId: readCustomerById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /customer/{id}/allphones:
+    get:
+      tags:
+      - Customers
+      summary: Read all phones owned by customer from the database by customer id
+      operationId: readAllCustomerPhones
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /customer/{id}/allemails:
+    get:
+      tags:
+      - Customers
+      summary: Read all emails owned by customer from the database by customer id
+      operationId: readAllCustomerEmails
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /customer/{id}/allcontactsbytype:
+    get:
+      tags:
+      - Customers
+      summary: Read all customer contact information from the database by customer id an by type (email or phone)
+      operationId: readAllCustomerContactsByType
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      - name: type
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+  /customer/{id}/allcontacts:
+    get:
+      tags:
+      - Customers
+      summary: Read all customer contact information from the database by customer id
+      operationId: readAllCustomerContacts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerWithContactsDto'
+        "400":
+          description: Bad Request
+          content:
+            text/html: {}
+        "404":
+          description: Not Found
+          content:
+            text/html: {}
+components:
+  schemas:
+    PhoneDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        customerId:
+          type: integer
+          format: int64
+        phone:
+          type: string
+    EmailDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        customerId:
+          type: integer
+          format: int64
+        email:
+          type: string
+    CustomerDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    CustomerWithContactsDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+        phones:
+          type: array
+          items:
+            type: string

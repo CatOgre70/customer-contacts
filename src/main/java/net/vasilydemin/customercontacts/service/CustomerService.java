@@ -1,12 +1,20 @@
 package net.vasilydemin.customercontacts.service;
 
+import net.vasilydemin.customercontacts.constant.ContactType;
 import net.vasilydemin.customercontacts.constant.UserMessages;
 import net.vasilydemin.customercontacts.dto.CustomerDto;
+import net.vasilydemin.customercontacts.dto.CustomerWithContactsDto;
 import net.vasilydemin.customercontacts.entity.Customer;
+import net.vasilydemin.customercontacts.entity.Email;
+import net.vasilydemin.customercontacts.entity.Phone;
+import net.vasilydemin.customercontacts.exception.ContactTypeIsWrongException;
 import net.vasilydemin.customercontacts.exception.CustomerWithSuchIdNotFoundException;
 import net.vasilydemin.customercontacts.exception.CustomerWithSuchNameNotFoundException;
 import net.vasilydemin.customercontacts.mapper.CustomerMapper;
+import net.vasilydemin.customercontacts.mapper.EmailMapper;
 import net.vasilydemin.customercontacts.repository.CustomerRepository;
+import net.vasilydemin.customercontacts.repository.EmailRepository;
+import net.vasilydemin.customercontacts.repository.PhoneRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,10 +29,16 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
-
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+    private final EmailRepository emailRepository;
+    private final PhoneRepository phoneRepository;
+    public CustomerService(CustomerRepository customerRepository,
+                           CustomerMapper customerMapper,
+                           EmailRepository emailRepository,
+                           PhoneRepository phoneRepository) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
+        this.emailRepository = emailRepository;
+        this.phoneRepository = phoneRepository;
     }
 
     /**
@@ -96,4 +110,43 @@ public class CustomerService {
             return customerMapper.entityToDto(customerFound.get());
         }
     }
+
+    public CustomerWithContactsDto readAllContactsByCustomerId(Long id) {
+        Optional<Customer> customerFound = customerRepository.findCustomerById(id);
+        if(customerFound.isEmpty()) {
+            String msg = UserMessages.CUSTOMER_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
+                    .replace("%id%", id.toString());
+            logger.error(msg);
+            throw new CustomerWithSuchIdNotFoundException(msg);
+        }
+        List<String> emails = emailRepository.findAllByCustomerId(id).stream().map(Email::getEmail).toList();
+        List<String> phones = phoneRepository.findAllByCustomerId(id).stream().map(Phone::getPhone).toList();
+        return new CustomerWithContactsDto(customerFound.get().getId(),
+                customerFound.get().getName(), emails, phones);
+    }
+
+    public List<String> readAllContactsByCustomerIdAndByType(Long id, String type) {
+        Optional<Customer> customerFound = customerRepository.findCustomerById(id);
+        if(customerFound.isEmpty()) {
+            String msg = UserMessages.CUSTOMER_WITH_SUCH_ID_NOT_FOUND.getUserMessage()
+                    .replace("%id%", id.toString());
+            logger.error(msg);
+            throw new CustomerWithSuchIdNotFoundException(msg);
+        }
+        ContactType contactType = ContactType.getContactTypeByName(type.toLowerCase());
+        switch(contactType) {
+            case EMAIL -> {
+                return emailRepository.findAllByCustomerId(id).stream().map(Email::getEmail).toList();
+            }
+            case PHONE -> {
+                return phoneRepository.findAllByCustomerId(id).stream().map(Phone::getPhone).toList();
+            }
+            default -> {
+                String msg = UserMessages.CONTACT_TYPE_IS_WRONG.getUserMessage().replace("%type%", type);
+                logger.error(msg);
+                throw new ContactTypeIsWrongException(msg);
+            }
+        }
+    }
+
 }

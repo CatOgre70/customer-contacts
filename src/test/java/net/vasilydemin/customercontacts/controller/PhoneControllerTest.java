@@ -75,7 +75,7 @@ public class PhoneControllerTest {
     }
 
     @Test
-    public void createEmailWhenCustomerNotFoundTest() throws Exception {
+    public void createPhoneWhenCustomerNotFoundTest() throws Exception {
         Phone phone1 = new Phone(1L, 1L, "+79012345678");
 
         JSONObject phoneObject = new JSONObject();
@@ -95,19 +95,19 @@ public class PhoneControllerTest {
     }
 
     @Test
-    public void readEmailByIdTest() throws Exception {
+    public void readPhoneByIdTest() throws Exception {
         Phone phone1 = new Phone(1L, 1L, "+79012345678");
 
-        JSONObject emailObject = new JSONObject();
-        emailObject.put("id", 1L);
-        emailObject.put("customerId", 1L);
-        emailObject.put("phone", "+79012345678");
+        JSONObject phoneObject = new JSONObject();
+        phoneObject.put("id", 1L);
+        phoneObject.put("customerId", 1L);
+        phoneObject.put("phone", "+79012345678");
 
         when(phoneRepository.findById(any(Long.class))).thenReturn(Optional.of(phone1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/phones/{id}", 1L)
-                        .content(emailObject.toString())
+                        .content(phoneObject.toString())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -117,15 +117,15 @@ public class PhoneControllerTest {
     }
 
     @Test
-    public void updateEmailTest() throws Exception {
+    public void updatePhoneTest() throws Exception {
         Phone phone1 = new Phone(1L, 1L, "+79012345678");
         Customer customer1 = new Customer(1L, "Vasily Demin");
         Phone phone2 = new Phone(1L, 1L, "+79102345678");
 
-        JSONObject emailObject = new JSONObject();
-        emailObject.put("id", 1L);
-        emailObject.put("customerId", 1L);
-        emailObject.put("phone", "+79102345678");
+        JSONObject phoneObject = new JSONObject();
+        phoneObject.put("id", 1L);
+        phoneObject.put("customerId", 1L);
+        phoneObject.put("phone", "+79102345678");
 
         when(phoneRepository.findById(any(Long.class))).thenReturn(Optional.of(phone1));
         when(customerRepository.findCustomerById(any(Long.class))).thenReturn(Optional.of(customer1));
@@ -133,7 +133,7 @@ public class PhoneControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/phones")
-                        .content(emailObject.toString())
+                        .content(phoneObject.toString())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -143,21 +143,21 @@ public class PhoneControllerTest {
     }
 
     @Test
-    public void deleteEmailTest() throws Exception {
+    public void deletePhoneTest() throws Exception {
         Phone phone1 = new Phone(1L, 1L, "+79012345678");
         Customer customer1 = new Customer(1L, "Vasily Demin");
 
-        JSONObject emailObject = new JSONObject();
-        emailObject.put("id", 1L);
-        emailObject.put("customerId", 1L);
-        emailObject.put("phone", "+79012345678");
+        JSONObject phoneObject = new JSONObject();
+        phoneObject.put("id", 1L);
+        phoneObject.put("customerId", 1L);
+        phoneObject.put("phone", "+79012345678");
 
         when(phoneRepository.findById(any(Long.class))).thenReturn(Optional.of(phone1));
         when(customerRepository.findCustomerById(any(Long.class))).thenReturn(Optional.of(customer1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/phones")
-                        .content(emailObject.toString())
+                        .content(phoneObject.toString())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())

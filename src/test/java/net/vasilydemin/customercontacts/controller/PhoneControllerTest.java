@@ -2,11 +2,11 @@ package net.vasilydemin.customercontacts.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.vasilydemin.customercontacts.entity.Customer;
-import net.vasilydemin.customercontacts.entity.Email;
-import net.vasilydemin.customercontacts.mapper.EmailMapper;
+import net.vasilydemin.customercontacts.entity.Phone;
+import net.vasilydemin.customercontacts.mapper.PhoneMapper;
 import net.vasilydemin.customercontacts.repository.CustomerRepository;
-import net.vasilydemin.customercontacts.repository.EmailRepository;
-import net.vasilydemin.customercontacts.service.EmailService;
+import net.vasilydemin.customercontacts.repository.PhoneRepository;
+import net.vasilydemin.customercontacts.service.PhoneService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,70 +25,70 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = EmailController.class)
-public class EmailControllerTest {
+@WebMvcTest(controllers = PhoneController.class)
+public class PhoneControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private EmailRepository emailRepository;
+    private PhoneRepository phoneRepository;
 
     @MockBean
     private CustomerRepository customerRepository;
 
     @SpyBean
-    private EmailService emailService;
+    private PhoneService phoneService;
 
     @SpyBean
-    private EmailMapper emailMapper;
+    private PhoneMapper phoneMapper;
 
     @InjectMocks
-    private EmailController emailController;
+    private PhoneController phoneController;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
-    public void createEmailTest() throws Exception {
-        Email email1 = new Email(1L, 1L, "vasily.demin@mail.org");
+    public void createPhoneTest() throws Exception {
+        Phone phone1 = new Phone(1L, 1L, "+79012345678");
         Customer customer1 = new Customer(1L, "Vasily Demin");
 
-        JSONObject emailObject = new JSONObject();
-        emailObject.put("id", 0L);
-        emailObject.put("customerId", 1L);
-        emailObject.put("email", "vasily.demin@mail.org");
+        JSONObject phoneObject = new JSONObject();
+        phoneObject.put("id", 0L);
+        phoneObject.put("customerId", 1L);
+        phoneObject.put("phone", "+79012345678");
 
-        when(emailRepository.save(any(Email.class))).thenReturn(email1);
+        when(phoneRepository.save(any(Phone.class))).thenReturn(phone1);
         when(customerRepository.findCustomerById(any(Long.class))).thenReturn(Optional.of(customer1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/emails")
-                .content(emailObject.toString())
+                .post("/phones")
+                .content(phoneObject.toString())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.customerId").value(1L))
-                .andExpect(jsonPath("$.email").value("vasily.demin@mail.org"));
+                .andExpect(jsonPath("$.phone").value("+79012345678"));
 
     }
 
     @Test
     public void createEmailWhenCustomerNotFoundTest() throws Exception {
-        Email email1 = new Email(1L, 1L, "vasily.demin@mail.org");
+        Phone phone1 = new Phone(1L, 1L, "+79012345678");
 
-        JSONObject emailObject = new JSONObject();
-        emailObject.put("id", 0L);
-        emailObject.put("customerId", 2L);
-        emailObject.put("email", "vasily.demin@mail.org");
+        JSONObject phoneObject = new JSONObject();
+        phoneObject.put("id", 0L);
+        phoneObject.put("customerId", 2L);
+        phoneObject.put("phone", "+79012345678");
 
-        when(emailRepository.save(any(Email.class))).thenReturn(email1);
+        when(phoneRepository.save(any(Phone.class))).thenReturn(phone1);
         when(customerRepository.findCustomerById(any(Long.class))).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/emails")
-                        .content(emailObject.toString())
+                        .post("/phones")
+                        .content(phoneObject.toString())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
@@ -96,74 +96,74 @@ public class EmailControllerTest {
 
     @Test
     public void readEmailByIdTest() throws Exception {
-        Email email1 = new Email(1L, 1L, "vasily.demin@mail.org");
+        Phone phone1 = new Phone(1L, 1L, "+79012345678");
 
         JSONObject emailObject = new JSONObject();
         emailObject.put("id", 1L);
         emailObject.put("customerId", 1L);
-        emailObject.put("email", "vasily.demin@mail.org");
+        emailObject.put("phone", "+79012345678");
 
-        when(emailRepository.findById(any(Long.class))).thenReturn(Optional.of(email1));
+        when(phoneRepository.findById(any(Long.class))).thenReturn(Optional.of(phone1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/emails/{id}", 1L)
+                        .get("/phones/{id}", 1L)
                         .content(emailObject.toString())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.customerId").value(1L))
-                .andExpect(jsonPath("$.email").value("vasily.demin@mail.org"));
+                .andExpect(jsonPath("$.phone").value("+79012345678"));
     }
 
     @Test
     public void updateEmailTest() throws Exception {
-        Email email1 = new Email(1L, 1L, "vasily.demin@mail.org");
+        Phone phone1 = new Phone(1L, 1L, "+79012345678");
         Customer customer1 = new Customer(1L, "Vasily Demin");
-        Email email2 = new Email(1L, 1L, "vvdemin@mail.org");
+        Phone phone2 = new Phone(1L, 1L, "+79102345678");
 
         JSONObject emailObject = new JSONObject();
         emailObject.put("id", 1L);
         emailObject.put("customerId", 1L);
-        emailObject.put("email", "vvdemin@mail.org");
+        emailObject.put("phone", "+79102345678");
 
-        when(emailRepository.findById(any(Long.class))).thenReturn(Optional.of(email1));
+        when(phoneRepository.findById(any(Long.class))).thenReturn(Optional.of(phone1));
         when(customerRepository.findCustomerById(any(Long.class))).thenReturn(Optional.of(customer1));
-        when(emailRepository.save(any(Email.class))).thenReturn(email2);
+        when(phoneRepository.save(any(Phone.class))).thenReturn(phone2);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/emails")
+                        .put("/phones")
                         .content(emailObject.toString())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.customerId").value(1L))
-                .andExpect(jsonPath("$.email").value("vvdemin@mail.org"));
+                .andExpect(jsonPath("$.phone").value("+79102345678"));
     }
 
     @Test
     public void deleteEmailTest() throws Exception {
-        Email email1 = new Email(1L, 1L, "vasily.demin@mail.org");
+        Phone phone1 = new Phone(1L, 1L, "+79012345678");
         Customer customer1 = new Customer(1L, "Vasily Demin");
 
         JSONObject emailObject = new JSONObject();
         emailObject.put("id", 1L);
         emailObject.put("customerId", 1L);
-        emailObject.put("email", "vasily.demin@mail.org");
+        emailObject.put("phone", "+79012345678");
 
-        when(emailRepository.findById(any(Long.class))).thenReturn(Optional.of(email1));
+        when(phoneRepository.findById(any(Long.class))).thenReturn(Optional.of(phone1));
         when(customerRepository.findCustomerById(any(Long.class))).thenReturn(Optional.of(customer1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/emails")
+                        .delete("/phones")
                         .content(emailObject.toString())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.customerId").value(1L))
-                .andExpect(jsonPath("$.email").value("vasily.demin@mail.org"));
+                .andExpect(jsonPath("$.phone").value("+79012345678"));
     }
 
 }

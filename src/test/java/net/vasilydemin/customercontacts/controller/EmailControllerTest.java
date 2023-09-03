@@ -147,7 +147,6 @@ public class EmailControllerTest {
     @Test
     public void deleteEmailTest() throws Exception {
         Email email1 = new Email(1L, 1L, "vasily.demin@mail.org");
-        EmailDto emailDto1 = new EmailDto(1L, 1L, "vasily.demin@mail.org");
         Customer customer1 = new Customer(1L, "Vasily Demin");
 
         JSONObject emailObject = new JSONObject();

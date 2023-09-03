@@ -1,17 +1,12 @@
 package net.vasilydemin.customercontacts.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.vasilydemin.customercontacts.dto.EmailDto;
 import net.vasilydemin.customercontacts.dto.PhoneDto;
 import net.vasilydemin.customercontacts.entity.Customer;
-import net.vasilydemin.customercontacts.entity.Email;
 import net.vasilydemin.customercontacts.entity.Phone;
-import net.vasilydemin.customercontacts.mapper.EmailMapper;
 import net.vasilydemin.customercontacts.mapper.PhoneMapper;
 import net.vasilydemin.customercontacts.repository.CustomerRepository;
-import net.vasilydemin.customercontacts.repository.EmailRepository;
 import net.vasilydemin.customercontacts.repository.PhoneRepository;
-import net.vasilydemin.customercontacts.service.EmailService;
 import net.vasilydemin.customercontacts.service.PhoneService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -151,7 +146,6 @@ public class PhoneControllerTest {
     @Test
     public void deleteEmailTest() throws Exception {
         Phone phone1 = new Phone(1L, 1L, "+79012345678");
-        PhoneDto phoneDto1 = new PhoneDto(1L, 1L, "+79012345678");
         Customer customer1 = new Customer(1L, "Vasily Demin");
 
         JSONObject emailObject = new JSONObject();

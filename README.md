@@ -1,6 +1,6 @@
 # Customer Contacts Application
 
-Java back-end to process customer contacts with emails and phones. Test task from Corporate Communications Inc. 
+Java back-end to process customer contacts with emails and phones. Test task from Unibell company 
 (Ufa, Russia)
 
 To start application you need to have Java 17 Runtime virtual machine installed on your system, download 

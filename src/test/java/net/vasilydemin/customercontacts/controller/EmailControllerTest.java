@@ -1,14 +1,12 @@
 package net.vasilydemin.customercontacts.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.vasilydemin.customercontacts.dto.EmailDto;
 import net.vasilydemin.customercontacts.entity.Customer;
 import net.vasilydemin.customercontacts.entity.Email;
 import net.vasilydemin.customercontacts.mapper.EmailMapper;
 import net.vasilydemin.customercontacts.repository.CustomerRepository;
 import net.vasilydemin.customercontacts.repository.EmailRepository;
 import net.vasilydemin.customercontacts.service.EmailService;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

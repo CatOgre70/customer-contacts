@@ -32,6 +32,19 @@ public class EmailService {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Method creates new email record in the database based on information from EmailDto
+     * @param emailDto email DTO
+     * @return created or existing email record. If specified email was not found in the database, method creates
+     * new email record and returns DTO with created email record data. If specified email already exists in the
+     * database and owned by same customer, then method returns DTO object with existing email record data. If
+     * specified email already exists in the database and owned by another customer, then method generates exception
+     * EmailIsInTheDatabaseAlreadyException
+     * @throws EmailIsInTheDatabaseAlreadyException If specified email already exists in the database and owned by
+     * another customer
+     * @throws CustomerMustNotBeNullException if EmailDto object id = null
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified customerId was not found in the database
+     */
     public EmailDto createEmail(EmailDto emailDto) {
         if(emailDto.getCustomerId() == null) {
             logger.error(UserMessages.CUSTOMER_ID_MUST_NOT_BE_NULL.getUserMessage());
@@ -57,6 +70,12 @@ public class EmailService {
         }
     }
 
+    /**
+     * Method looks for email record with specified id
+     * @param id email id
+     * @return EmailDto object with email record data
+     * @throws EmailWithSuchIdNotFoundException if email record with specified id was not found in the database
+     */
     public EmailDto readEmailById(Long id) {
         Optional<Email> emailFound = emailRepository.findById(id);
         if(emailFound.isPresent()) {
@@ -69,6 +88,12 @@ public class EmailService {
         }
     }
 
+    /**
+     * Method looks for all emails owned by customer with specified id
+     * @param customerId - customer id (surprise, surprise!)
+     * @return List (array) of EmailDto objects found
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified id was not found in the database
+     */
     public List<EmailDto> findAllEmailsByCustomerId(Long customerId) {
         Optional<Customer> customerFound = customerRepository.findCustomerById(customerId);
         if(customerFound.isEmpty()) {
@@ -82,6 +107,13 @@ public class EmailService {
 
     }
 
+    /**
+     * Method updates existing email record with data from EmailDto object
+     * @param emailDto EmailDto object with data for updating
+     * @return EmailDto object with updated data
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified customerId was not found in the database
+     * @throws EmailWithSuchIdNotFoundException if email record with specified id was not found in the database
+     */
     public EmailDto updateEmail(EmailDto emailDto) {
         Optional<Email> emailFound = emailRepository.findById(emailDto.getId());
         if(emailFound.isEmpty()) {
@@ -100,6 +132,13 @@ public class EmailService {
         return emailMapper.entityToDto(emailRepository.save(emailMapper.dtoToEntity(emailDto)));
     }
 
+    /**
+     * Method deletes specified email record from the database
+     * @param emailDto EmailDto object to delete from the database
+     * @return EmailDto object with deleted data
+     * @throws EmailWithSuchIdNotFoundException if email record with specified id (emailDto.getId()) was not found
+     * in the database
+     */
     public EmailDto deleteEmail(EmailDto emailDto){
         Optional<Email> emailFound = emailRepository.findById(emailDto.getId());
         if(emailFound.isEmpty()) {

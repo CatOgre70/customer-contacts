@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Customer entity representing all needed customer information (well, id and name)
+ */
 @Entity(name = "customers")
 @AllArgsConstructor
 @NoArgsConstructor

@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Customer phone entity class (id, customer id and phone)
+ */
 @Entity(name = "phones")
 @AllArgsConstructor
 @NoArgsConstructor

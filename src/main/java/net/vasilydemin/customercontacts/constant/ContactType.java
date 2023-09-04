@@ -5,6 +5,9 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum with contact types: phone or email
+ */
 @Getter
 public enum ContactType {
 

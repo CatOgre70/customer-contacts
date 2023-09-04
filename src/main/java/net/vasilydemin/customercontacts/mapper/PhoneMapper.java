@@ -4,6 +4,9 @@ import net.vasilydemin.customercontacts.dto.PhoneDto;
 import net.vasilydemin.customercontacts.entity.Phone;
 import org.springframework.stereotype.Component;
 
+/**
+ * Phone entity to DTO and DTO to entity mapper. No more, but no less
+ */
 @Component
 public class PhoneMapper {
 

@@ -2,6 +2,9 @@ package net.vasilydemin.customercontacts.constant;
 
 import lombok.Getter;
 
+/**
+ * Enum with messages used in the loggers and for frontend developers
+ */
 @Getter
 public enum UserMessages {
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * but without success
  */
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Customer with such id was not found in the database")
-public class CustomerWithSuchIdNotFoundException extends RuntimeException {
+public class CustomerWithSuchIdNotFoundException extends NotFoundExceptions {
 
     public CustomerWithSuchIdNotFoundException(String msg) {
         super(msg);

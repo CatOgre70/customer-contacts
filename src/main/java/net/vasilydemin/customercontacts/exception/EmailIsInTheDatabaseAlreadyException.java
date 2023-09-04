@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * but email record with the same email is in the database already and owned by another customer
  */
 @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Error: email is in the database already")
-public class EmailIsInTheDatabaseAlreadyException extends RuntimeException{
+public class EmailIsInTheDatabaseAlreadyException extends BadRequestExceptions{
 
     public EmailIsInTheDatabaseAlreadyException(String msg) {
         super(msg);

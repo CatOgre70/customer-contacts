@@ -123,6 +123,13 @@ public class CustomerService {
         }
     }
 
+    /**
+     * Delete specified customer from the database
+     * @param customerDto customer to delete (only id field is being used to look for specified customer)
+     * @return CustomerDto with deleted customer record data
+     * @throws CustomerWithSuchIdNotFoundException if customer with id specified in the customerDto was not found
+     * in the database
+     */
     public CustomerDto deleteCustomer(CustomerDto customerDto){
         Optional<Customer> customerFound = customerRepository.findCustomerById(customerDto.getId());
         if(customerFound.isEmpty()) {
@@ -136,6 +143,12 @@ public class CustomerService {
         }
     }
 
+    /**
+     * Method to read all customer information from the database (customer, email, phone repositories)
+     * @param id customer id
+     * @return CustomerWithContactsDto object
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified id was not found in the database
+     */
     public CustomerWithContactsDto readAllContactsByCustomerId(Long id) {
         Optional<Customer> customerFound = customerRepository.findCustomerById(id);
         if(customerFound.isEmpty()) {
@@ -150,6 +163,13 @@ public class CustomerService {
                 customerFound.get().getName(), emails, phones);
     }
 
+    /**
+     * Method to read all customer contacts from the database by customer id and type of contacts (email or phone)
+     * @param id customer id
+     * @param type contacts type (email or phone)
+     * @return List (array) of strings containing contacts of specific type
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified id was not found in the database
+     */
     public List<String> readAllContactsByCustomerIdAndByType(Long id, String type) {
         Optional<Customer> customerFound = customerRepository.findCustomerById(id);
         if(customerFound.isEmpty()) {

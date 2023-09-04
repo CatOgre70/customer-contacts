@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * If ContactType.getContactTypeByName() method returns null, then service generates this exception
  */
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Contact type is wrong")
-public class ContactTypeIsWrongException extends RuntimeException{
+public class ContactTypeIsWrongException extends NotFoundExceptions{
 
     public ContactTypeIsWrongException(String msg) {
         super(msg);

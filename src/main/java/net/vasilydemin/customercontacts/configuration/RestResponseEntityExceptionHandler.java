@@ -17,18 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  */
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value =
-            {   ContactTypeIsWrongException.class,
-                CustomerMustNotBeNullException.class,
-                CustomerWithSuchIdNotFoundException.class,
-                CustomerWithSuchNameNotFoundException.class,
-                EmailIsInTheDatabaseAlreadyException.class,
-                EmailWithSuchIdNotFoundException.class,
-                PhoneIsInTheDatabaseAlreadyException.class,
-                PhoneWithSuchIdNotFoundException.class
-            })
-    protected ResponseEntity<Object> handleConflict(
-            RuntimeException ex, WebRequest request) {
+    @ExceptionHandler(value = {NotFoundExceptions.class, BadRequestExceptions.class})
+    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
 
         // Well, this is demo of exception handler. Should be extended with StackTrace
         // .toString printing and converting it to Json
@@ -37,15 +27,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         String bodyOfResponse = "{\"reason\":\"" + ex.getMessage() +"\", \"stackDepth\":"
                 + ex.getStackTrace().length + "}";
         HttpStatus httpStatus;
-        if(ex.getClass().equals(ContactTypeIsWrongException.class)
-                || ex.getClass().equals(CustomerMustNotBeNullException.class)
-                || ex.getClass().equals(EmailIsInTheDatabaseAlreadyException.class)
-                || ex.getClass().equals(PhoneIsInTheDatabaseAlreadyException.class)){
+        if(ex.getClass().getSuperclass().equals(BadRequestExceptions.class)){
             httpStatus = HttpStatus.BAD_REQUEST;
-        } else if(ex.getClass().equals(CustomerWithSuchIdNotFoundException.class)
-                || ex.getClass().equals(CustomerWithSuchNameNotFoundException.class)
-                || ex.getClass().equals(EmailWithSuchIdNotFoundException.class)
-                || ex.getClass().equals(PhoneWithSuchIdNotFoundException.class)) {
+        } else if(ex.getClass().getSuperclass().equals(NotFoundExceptions.class)){
             httpStatus = HttpStatus.NOT_FOUND;
         } else {
             httpStatus = HttpStatus.CONFLICT;

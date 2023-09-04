@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * It means that frontend sends us wrong CustomerDto object
  */
 @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Customer id mustn't be null")
-public class CustomerMustNotBeNullException extends RuntimeException {
+public class CustomerMustNotBeNullException extends BadRequestExceptions {
 
     public CustomerMustNotBeNullException(String msg) {
         super(msg);

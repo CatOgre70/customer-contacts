@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Custom exception handler for all exceptions in exception package
+ * It allows to generate and transfer to frontend not only status codes, but bodies with detailed
+ * information regarding exception
+ * Well, it is nice, but needs fewer development (please see comment within text of the handler)
+ */
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value =

@@ -4,6 +4,9 @@ import net.vasilydemin.customercontacts.dto.EmailDto;
 import net.vasilydemin.customercontacts.entity.Email;
 import org.springframework.stereotype.Component;
 
+/**
+ * Email entity to DTO and DTO to entity mapper. No more, but no less
+ */
 @Component
 public class EmailMapper {
 

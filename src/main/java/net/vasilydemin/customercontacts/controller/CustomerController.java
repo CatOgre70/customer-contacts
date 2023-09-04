@@ -32,7 +32,6 @@ public class CustomerController {
     @Value("${application.default.itemsperpage}")
     private int defaultItemsPerPage;
 
-
     private final CustomerService customerService;
     private final EmailService emailService;
     private final PhoneService phoneService;

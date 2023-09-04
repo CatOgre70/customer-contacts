@@ -17,3 +17,7 @@ CREATE TABLE phones (
     customer_id bigint references customers(id) on delete cascade,
     phone varchar(255)
 );
+
+-- changeset vasilydemin:2
+ALTER TABLE emails ADD CONSTRAINT unique_email UNIQUE(email);
+ALTER TABLE phones ADD CONSTRAINT unique_phone UNIQUE(phone);

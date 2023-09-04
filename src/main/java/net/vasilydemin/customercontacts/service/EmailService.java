@@ -42,7 +42,7 @@ public class EmailService {
      * EmailIsInTheDatabaseAlreadyException
      * @throws EmailIsInTheDatabaseAlreadyException If specified email already exists in the database and owned by
      * another customer
-     * @throws CustomerMustNotBeNullException if EmailDto object id = null
+     * @throws CustomerMustNotBeNullException if EmailDto object customerId = null
      * @throws CustomerWithSuchIdNotFoundException if customer with specified customerId was not found in the database
      */
     public EmailDto createEmail(EmailDto emailDto) {

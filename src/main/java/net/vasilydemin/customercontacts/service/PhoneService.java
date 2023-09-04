@@ -29,6 +29,19 @@ public class PhoneService {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Method creates new phone record in the database based on information from PhoneDto
+     * @param phoneDto phone DTO
+     * @return created or existing phone record. If specified phone was not found in the database, method creates
+     * new phone record and returns DTO with created phone record data. If specified phone already exists in the
+     * database and owned by same customer, then method returns DTO object with existing phone record data. If
+     * specified phone already exists in the database and owned by another customer, then method generates exception
+     * PhoneIsInTheDatabaseAlreadyException
+     * @throws PhoneIsInTheDatabaseAlreadyException If specified phone already exists in the database and owned by
+     * another customer
+     * @throws CustomerMustNotBeNullException if PhoneDto object customerId = null
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified customerId was not found in the database
+     */
     public PhoneDto createPhone(PhoneDto phoneDto) {
         if(phoneDto.getCustomerId() == null) {
             logger.error(UserMessages.CUSTOMER_ID_MUST_NOT_BE_NULL.getUserMessage());
@@ -54,6 +67,12 @@ public class PhoneService {
         }
     }
 
+    /**
+     * Method looks for phone record with specified id
+     * @param id phone id
+     * @return PhoneDto object with phone found record data
+     * @throws PhoneWithSuchIdNotFoundException if phone record with specified id was not found in the database
+     */
     public PhoneDto readPhoneById(Long id) {
         Optional<Phone> phoneFound = phoneRepository.findById(id);
         if(phoneFound.isPresent()) {
@@ -66,6 +85,12 @@ public class PhoneService {
         }
     }
 
+    /**
+     * Method looks for all phones owned by customer with specified id
+     * @param customerId - customer id (surprise, surprise!)
+     * @return List (array) of phoneDto objects found
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified id was not found in the database
+     */
     public List<PhoneDto> findAllPhonesByCustomerId(Long customerId) {
         Optional<Customer> customerFound = customerRepository.findCustomerById(customerId);
         if(customerFound.isEmpty()) {
@@ -79,6 +104,13 @@ public class PhoneService {
 
     }
 
+    /**
+     * Method updates existing phone record with data from PhoneDto object
+     * @param phoneDto PhoneDto object with data for updating
+     * @return PhoneDto object with updated data
+     * @throws CustomerWithSuchIdNotFoundException if customer with specified customerId was not found in the database
+     * @throws PhoneWithSuchIdNotFoundException if phone record with specified id was not found in the database
+     */
     public PhoneDto updatePhone(PhoneDto phoneDto) {
         Optional<Phone> phoneFound = phoneRepository.findById(phoneDto.getId());
         if(phoneFound.isEmpty()) {
@@ -97,7 +129,14 @@ public class PhoneService {
         return phoneMapper.entityToDto(phoneRepository.save(phoneMapper.dtoToEntity(phoneDto)));
     }
 
-    public PhoneDto deletePhone(PhoneDto phoneDto){
+    /**
+     * Method deletes specified phone record from the database
+     * @param phoneDto PhoneDto object to delete from the database
+     * @return phoneDto object with deleted data
+     * @throws PhoneWithSuchIdNotFoundException if phone record with specified id (phoneDto.getId()) was not found
+     * in the database
+     */
+     public PhoneDto deletePhone(PhoneDto phoneDto){
         Optional<Phone> phoneFound = phoneRepository.findById(phoneDto.getId());
         if(phoneFound.isEmpty()) {
             String msg = UserMessages.PHONE_WITH_SUCH_ID_NOT_FOUND.getUserMessage()

@@ -61,8 +61,8 @@ public class CustomerService {
     /**
      * Read customer with selected id from the database
      * @param id Customer id
-     * @return CustomerDto object. If customer with such name doesn't exist in the database then throw
-     * CustomerWithSuchIdNotFoundException
+     * @return CustomerDto object with found data
+     * @throws CustomerWithSuchIdNotFoundException if customer with such name doesn't exist in the database
      */
     public CustomerDto readCustomerById(Long id){
         Optional<Customer> customerFound = customerRepository.findCustomerById(id);
@@ -79,8 +79,8 @@ public class CustomerService {
     /**
      * Read customer with selected name from the database
      * @param name customer name
-     * @return CustomerDto object. If customer with such name doesn't exist in the database then throw
-     * CustomerWithSuchNameNotFoundException
+     * @return CustomerDto object
+     * @throws CustomerWithSuchNameNotFoundException if customer with such name doesn't exist in the database
      */
     public CustomerDto readCustomerByName(String name) {
         Optional<Customer> customerFound = customerRepository.findCustomerByNameIgnoreCase(name);

@@ -105,6 +105,12 @@ public class CustomerService {
                 .toList();
     }
 
+    /**
+     * Update selected customer with data from CustomerDto
+     * @param customerDto customer DTO obtained from frontend
+     * @return CustomerDto with updated fields
+     * @throws CustomerWithSuchIdNotFoundException if customer with id from DTO was not found in the database
+     */
     public CustomerDto updateCustomer(CustomerDto customerDto) {
         Optional<Customer> customerFound = customerRepository.findCustomerById(customerDto.getId());
         if(customerFound.isEmpty()) {

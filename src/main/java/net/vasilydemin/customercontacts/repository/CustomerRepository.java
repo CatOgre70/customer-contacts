@@ -5,6 +5,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
+/**
+ * Customer repository with Paging and Sorting capabilities
+ */
 public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long> {
 
     Optional<Customer> findCustomerByNameIgnoreCase(String name);

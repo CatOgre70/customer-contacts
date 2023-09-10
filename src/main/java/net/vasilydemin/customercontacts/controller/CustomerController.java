@@ -1,6 +1,7 @@
 package net.vasilydemin.customercontacts.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -63,7 +64,8 @@ public class CustomerController {
             tags = "Customers"
     )
     @PostMapping
-    public CustomerDto createCustomer(@NotNull @RequestParam(value = "name") String name){
+    public CustomerDto createCustomer(@Parameter(name =  "name", description  = "Full name of the user",
+            example = "Vasily Demin", required = true) @NotNull @RequestParam(value = "name") String name){
         return customerService.createCustomer(name);
     }
 
@@ -93,7 +95,8 @@ public class CustomerController {
             tags = "Customers"
     )
     @GetMapping("/{id}")
-    public CustomerDto readCustomerById(@NotNull @PathVariable Long id) {
+    public CustomerDto readCustomerById(@Parameter(name =  "id", description  = "Customer id", example = "1",
+            required = true) @NotNull @PathVariable Long id) {
         return customerService.readCustomerById(id);
     }
 
